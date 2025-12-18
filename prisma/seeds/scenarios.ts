@@ -124,7 +124,18 @@ export const SCENARIO_SEEDS: SeedScenario[] = [
     title: "Bubble Tea",
     iconKey: "Coffee",
     foodType: "DRINK",
-    keywords: ["bubble tea", "boba", "milk tea", "tapioca"],
+    keywords: [
+      "bubble tea",
+      "bubbletea",
+      "boba",
+      "boba tea",
+      "bobatea",
+      "milk tea",
+      "pearl milk tea",
+      "tapioca",
+      "tapioca pearls",
+      "bbt",
+    ],
     questions: [
       {
         id: "cupSize",
@@ -778,8 +789,36 @@ export function listScenarioSlugs() {
   return SCENARIO_SEEDS.map((s) => s.slug);
 }
 
+function normalizeSlug(s: string) {
+  return s
+    .trim()
+    .toLowerCase()
+    .replace(/[_\s]+/g, "-")
+    .replace(/-+/g, "-");
+}
+
+function normalizeToken(s: string) {
+  return s.trim().toLowerCase();
+}
+
 export function pickScenarioSeeds(slugs: string[] | null) {
   if (!slugs || slugs.length === 0) return SCENARIO_SEEDS;
-  const wanted = new Set(slugs.map((s) => s.trim()).filter(Boolean));
-  return SCENARIO_SEEDS.filter((s) => wanted.has(s.slug));
+  const wanted = new Set(slugs.map(normalizeSlug).filter(Boolean));
+
+  return SCENARIO_SEEDS.filter((s) => {
+    const slugKey = normalizeSlug(s.slug);
+    const titleKey = normalizeSlug(s.title);
+
+    if (wanted.has(slugKey) || wanted.has(titleKey)) return true;
+
+    // Also allow selecting a scenario by keyword via `--scenario boba`.
+    const keywordSet = new Set(
+      (s.keywords ?? []).map((k) => normalizeSlug(normalizeToken(k)))
+    );
+    for (const w of wanted) {
+      if (keywordSet.has(w)) return true;
+    }
+
+    return false;
+  });
 }

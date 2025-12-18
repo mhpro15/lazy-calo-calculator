@@ -55,31 +55,38 @@ export default function LazyCaloCalculator() {
     null
   );
 
-  useEffect(() => {
+  const pickGreeting = () => {
     const history = loadHistory();
     const timeSinceLast = getTimeSinceLastLog();
 
-    let selectedGreeting = "";
     if (history.length === 0) {
-      selectedGreeting =
+      return (
         pickFreshLine({
           key: "greeting:first",
           value: greetingRoasts.firstTime,
-        }) || "Welcome!";
-    } else if (timeSinceLast !== null && timeSinceLast < 4 * 60 * 60 * 1000) {
-      selectedGreeting =
+        }) || "Welcome!"
+      );
+    }
+
+    if (timeSinceLast !== null && timeSinceLast < 4 * 60 * 60 * 1000) {
+      return (
         pickFreshLine({
           key: "greeting:recent",
           value: greetingRoasts.recent,
-        }) || "Back already?";
-    } else {
-      selectedGreeting =
-        pickFreshLine({
-          key: "greeting:absent",
-          value: greetingRoasts.absent,
-        }) || "Where have you been?";
+        }) || "Back already?"
+      );
     }
-    setGreeting(selectedGreeting);
+
+    return (
+      pickFreshLine({
+        key: "greeting:absent",
+        value: greetingRoasts.absent,
+      }) || "Where have you been?"
+    );
+  };
+
+  useEffect(() => {
+    setGreeting(pickGreeting());
   }, []);
 
   useEffect(() => {
@@ -368,7 +375,10 @@ export default function LazyCaloCalculator() {
     let pickedQuestions: Question[] | null = null;
 
     try {
-      const res = await fetch(`/api/scenario?dish=${encodeURIComponent(dish)}`);
+      const res = await fetch(
+        `/api/scenario?dish=${encodeURIComponent(dish)}`,
+        { cache: "no-store" }
+      );
       const json = (await res.json()) as
         | {
             matched: true;
@@ -514,6 +524,16 @@ export default function LazyCaloCalculator() {
     setPendingAnswer(null);
     setTasteTax(null);
     setProcessRoast(null);
+    setRoastPack({
+      dishRoast: null,
+      questionIntroById: {},
+      optionRoastByKey: {},
+    });
+    setGreeting(pickGreeting());
+    setRandomTip(
+      pickFreshLine({ key: "tip:lazy", value: LAZY_TIPS, avoidLast: 6 }) ||
+        LAZY_TIPS[Math.floor(Math.random() * LAZY_TIPS.length)]
+    );
   };
 
   const openHistory = () => {
@@ -533,9 +553,12 @@ export default function LazyCaloCalculator() {
     setHistoryEntries([]);
   };
 
-  const [randomTip] = useState(
-    () => LAZY_TIPS[Math.floor(Math.random() * LAZY_TIPS.length)]
-  );
+  const [randomTip, setRandomTip] = useState(() => {
+    return (
+      pickFreshLine({ key: "tip:lazy", value: LAZY_TIPS, avoidLast: 6 }) ||
+      LAZY_TIPS[Math.floor(Math.random() * LAZY_TIPS.length)]
+    );
+  });
 
   const getBaseQuestions = (currentAnswers: Record<string, string>) => {
     if (scenarioQuestions) return scenarioQuestions;
@@ -588,9 +611,9 @@ export default function LazyCaloCalculator() {
               Ever think calorie tracking was too tedious? Me too.
             </p>
             <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
-              That&apos;s why I made this. You tell me what you ate, I&apos;ll do the math.
-              No weighing. No spreadsheets. Just vibes, numbers, and the slow collapse
-              of plausible deniability.
+              That&apos;s why I made this. You tell me what you ate, I&apos;ll
+              do the math. No weighing. No spreadsheets. Just vibes, numbers,
+              and the slow collapse of plausible deniability.
             </p>
             <button
               onClick={dismissIntro}

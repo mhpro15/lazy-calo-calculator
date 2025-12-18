@@ -5,6 +5,22 @@ import {
 } from "../../src/app/data/roasts";
 import type { FoodTypeLiteral, SeedRoastLine } from "./types";
 
+function coerceLines(value: unknown): string[] {
+  if (typeof value === "string") {
+    const s = value.trim();
+    return s ? [s] : [];
+  }
+
+  if (Array.isArray(value)) {
+    return value
+      .filter((v): v is string => typeof v === "string")
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+
+  return [];
+}
+
 const foodTypeForQuestionKey = (
   questionKey: string
 ): FoodTypeLiteral | undefined => {
@@ -61,8 +77,9 @@ const foodTypeForQuestionKey = (
 export function buildRoastSeeds(): SeedRoastLine[] {
   const rows: SeedRoastLine[] = [];
 
-  for (const [dishKey, lines] of Object.entries(dishRecognitionRoasts)) {
+  for (const [dishKey, raw] of Object.entries(dishRecognitionRoasts)) {
     const key = dishKey === "generic" ? null : dishKey;
+    const lines = coerceLines(raw);
     for (let i = 0; i < lines.length; i += 1) {
       rows.push({
         scope: "DISH",
@@ -73,8 +90,8 @@ export function buildRoastSeeds(): SeedRoastLine[] {
     }
   }
 
-  for (const [questionKey, line] of Object.entries(questionIntroRoasts)) {
-    const lines = Array.isArray(line) ? line : [line];
+  for (const [questionKey, raw] of Object.entries(questionIntroRoasts)) {
+    const lines = coerceLines(raw);
     for (let i = 0; i < lines.length; i += 1) {
       rows.push({
         scope: "QUESTION",
@@ -92,7 +109,7 @@ export function buildRoastSeeds(): SeedRoastLine[] {
     const questionKey = key.slice(0, pipeIndex);
     const optionLabel = key.slice(pipeIndex + 1);
 
-    const lines = Array.isArray(text) ? text : [text];
+    const lines = coerceLines(text);
     for (let i = 0; i < lines.length; i += 1) {
       rows.push({
         scope: "OPTION",

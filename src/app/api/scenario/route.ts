@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 type ScenarioResponse =
   | {
@@ -122,10 +124,17 @@ export async function GET(request: Request) {
   const dish = normalize(url.searchParams.get("dish") ?? "");
 
   if (!dish) {
-    return NextResponse.json<ScenarioResponse>({
-      matched: false,
-      roasts: { dishRoast: null, questionIntroById: {}, optionRoastByKey: {} },
-    });
+    return NextResponse.json<ScenarioResponse>(
+      {
+        matched: false,
+        roasts: {
+          dishRoast: null,
+          questionIntroById: {},
+          optionRoastByKey: {},
+        },
+      },
+      { headers: { "Cache-Control": "no-store" } }
+    );
   }
 
   const scenarios = await prisma.scenario.findMany({
@@ -154,14 +163,17 @@ export async function GET(request: Request) {
   );
 
   if (!matched) {
-    return NextResponse.json<ScenarioResponse>({
-      matched: false,
-      roasts: {
-        dishRoast: await getDishRoast(dish),
-        questionIntroById: {},
-        optionRoastByKey: {},
+    return NextResponse.json<ScenarioResponse>(
+      {
+        matched: false,
+        roasts: {
+          dishRoast: await getDishRoast(dish),
+          questionIntroById: {},
+          optionRoastByKey: {},
+        },
       },
-    });
+      { headers: { "Cache-Control": "no-store" } }
+    );
   }
 
   const questionKeys = matched.questions.map((q) => q.key);
@@ -171,19 +183,22 @@ export async function GET(request: Request) {
     questionKeys,
   });
 
-  return NextResponse.json<ScenarioResponse>({
-    matched: true,
-    scenario: {
-      slug: matched.slug,
-      title: matched.title,
-      iconKey: matched.iconKey,
-      foodType: matched.foodType,
-      questions: matched.questions.map((q) => ({
-        id: q.key,
-        text: q.text,
-        options: q.options,
-      })),
+  return NextResponse.json<ScenarioResponse>(
+    {
+      matched: true,
+      scenario: {
+        slug: matched.slug,
+        title: matched.title,
+        iconKey: matched.iconKey,
+        foodType: matched.foodType,
+        questions: matched.questions.map((q) => ({
+          id: q.key,
+          text: q.text,
+          options: q.options,
+        })),
+      },
+      roasts,
     },
-    roasts,
-  });
+    { headers: { "Cache-Control": "no-store" } }
+  );
 }
