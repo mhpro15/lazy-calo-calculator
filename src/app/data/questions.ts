@@ -124,6 +124,7 @@ export const SCENARIOS: Record<
           { label: "350 ml / 12 oz (small-ish)", value: 220 },
           { label: "500 ml / 16 oz (standard)", value: 350 },
           { label: "700 ml / 24 oz (the bucket)", value: 520 },
+          { label: "1000 ml / 34 oz (basically a jug)", value: 720 },
         ],
       },
       {
@@ -315,6 +316,7 @@ export const DRINK_QUESTIONS: Question[] = [
       { label: "350 ml / 12 oz", value: 140 },
       { label: "500 ml / 16 oz", value: 220 },
       { label: "700 ml / 24 oz", value: 340 },
+      { label: "1000 ml / 34 oz", value: 480 },
     ],
   },
   {

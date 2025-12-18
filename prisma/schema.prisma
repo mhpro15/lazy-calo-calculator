@@ -9,12 +9,25 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum FoodType {
+  MEAL
+  SNACK
+  DRINK
+}
+
+enum RoastScope {
+  DISH
+  QUESTION
+  OPTION
+}
+
 model Scenario {
   id        String            @id @default(cuid())
   slug      String            @unique
   title     String
   // Maps to a lucide icon on the client ("Pizza", "Hamburger", "Salad", "Coffee", "Utensils")
   iconKey   String
+  foodType  FoodType
   keywords  ScenarioKeyword[]
   questions Question[]
   createdAt DateTime          @default(now())
@@ -53,4 +66,25 @@ model Option {
   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
   @@index([questionId, order])
+}
+
+model RoastLine {
+  id          String      @id @default(cuid())
+  scope       RoastScope
+  foodType    FoodType?
+  // For scope=DISH: match the dish input by substring (e.g. "pizza"). Null is the generic fallback.
+  dishKey     String?
+  // For scope=QUESTION/OPTION: question key (e.g. "drinkSugar", "slices")
+  questionKey String?
+  // For scope=OPTION: the exact option label (client uses questionKey|label lookup)
+  optionLabel String?
+  text        String
+  order       Int
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([scope])
+  @@index([foodType])
+  @@index([questionKey])
+  @@index([dishKey])
 }

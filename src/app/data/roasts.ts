@@ -74,7 +74,26 @@ export const questionIntroRoasts = {
 
   // Generic
   size: "Before we do the math, how big was this?",
-  regret: "Finally: on a scale of 'pure bliss' to 'why did I do that', where are we?",
+  regret:
+    "Finally: on a scale of 'pure bliss' to 'why did I do that', where are we?",
+
+  // Food type branch
+  foodType: "Quick classification time. Don’t overthink it (you will).",
+
+  // Generic Meal/Snack/Drink flows
+  mealPortion: "Meal size. Be brave. Be honest.",
+  mealExtras: "Extras count. Yes, even the ‘little bit’.",
+
+  snackAmount: "Snack amount. Define ‘one serving’ with your whole chest.",
+  snackType: "Snack energy check: wholesome… or chaos?",
+
+  drinkSize: "Drink size. Liquids count. Sorry.",
+  drinkSugar: "How sweet was it? Don’t lie to the app.",
+  drinkCream: "Milk/cream situation? This is where it gets suspicious.",
+
+  // Scenario-ish ids used by DB seeds
+  cupSize: "Cup size. Tell the truth. The cup remembers.",
+  sugarLevel: "Sugar level. We’re measuring joy today.",
 };
 
 // =====================================================
@@ -83,8 +102,7 @@ export const questionIntroRoasts = {
 
 export const optionClickRoasts = {
   // Pizza
-  "slices|Just 1 (Liar)":
-    "Sure. Just one. We believe you. (We don't.)",
+  "slices|Just 1 (Liar)": "Sure. Just one. We believe you. (We don't.)",
   "slices|2-3 (Respectable)":
     "Respectable! You're at least honest about your chaos.",
   "slices|4-6 (The 'I'm stressed' special)":
@@ -94,7 +112,8 @@ export const optionClickRoasts = {
 
   "grease|Dry as a bone": "A dry pizza? Who hurt you?",
   "grease|Shiny": "Shiny is honest. Shiny we can work with.",
-  "grease|I needed a second napkin": "Two napkins in, and we're just getting started.",
+  "grease|I needed a second napkin":
+    "Two napkins in, and we're just getting started.",
   "grease|It's currently transparent":
     "Transparent grease pizza. That's actually impressive.",
 
@@ -108,7 +127,8 @@ export const optionClickRoasts = {
   "patties|I can't see the bun anymore":
     "The bun disappeared. This is a structural problem now.",
 
-  "sides|No, I'm on a 'diet'": "Sure you are. (The quotes around 'diet' say otherwise.)",
+  "sides|No, I'm on a 'diet'":
+    "Sure you are. (The quotes around 'diet' say otherwise.)",
   "sides|Small (3 fries)": "3 fries. The app respects this lie.",
   "sides|Large (The bucket)": "A bucket of fries. Commitment to the bit.",
   "sides|Fries AND a shake (Living life to the fullest)":
@@ -138,7 +158,8 @@ export const optionClickRoasts = {
   "sugar|I lost count": "You lost count of the sugar. The app is not shocked.",
 
   // Generic
-  "size|Tiny (Bird portion)": "Tiny? Either you're being humble or you're a bird.",
+  "size|Tiny (Bird portion)":
+    "Tiny? Either you're being humble or you're a bird.",
   "size|Normal (Human portion)": "A human portion. Groundbreaking.",
   "size|Large (Hungry human portion)": "Large. The app respects the honesty.",
   "size|Gigantic (Feeds a small village)":
@@ -148,6 +169,66 @@ export const optionClickRoasts = {
   "regret|5 - It was okay": "Five. Honest middle ground.",
   "regret|10 - I need a nap and a gym membership":
     "Full regret mode. The app feels this in its circuits.",
+
+  // Food type branch
+  "foodType|Meal": "Meal. Okay, main character energy.",
+  "foodType|Snack":
+    "Snack. This can still be dangerous. Don’t get comfortable.",
+  "foodType|Drink":
+    "Drink. The sneakiest calories. The most innocent-looking lies.",
+
+  // Generic Meal/Snack/Drink flows
+  "mealPortion|Small plate": "Small plate. We love portion control cosplay.",
+  "mealPortion|Normal plate": "Normal plate. A rare moment of balance.",
+  "mealPortion|Big plate": "Big plate. Bold.",
+  "mealPortion|Seconds happened": "Seconds. The plot thickens.",
+
+  "mealExtras|None / minimal":
+    "Minimal extras. Who are you and what have you done with you?",
+  "mealExtras|Some sauce/cheese": "Some extras. Reasonable chaos.",
+  "mealExtras|Heavy sauce/cheese/oil":
+    "Heavy extras. Sauce said: I’m the captain now.",
+
+  "snackAmount|One serving (allegedly)": "One serving. Allegedly. Sure.",
+  "snackAmount|Two servings": "Two servings. The honest path.",
+  "snackAmount|Three+ servings (oops)":
+    "Three+ servings. ‘Oops’ is doing a lot of work here.",
+
+  "snackType|Fruit / light snack":
+    "Fruit. Look at you, pretending you’re balanced.",
+  "snackType|Chips / cookies": "Chips/cookies. Classic snack villain arc.",
+  "snackType|Candy / dessert snack":
+    "Dessert snack. Sugar side quest accepted.",
+
+  "drinkSize|250 ml / 8 oz": "Small drink. Cute.",
+  "drinkSize|350 ml / 12 oz": "Normal-ish. We move.",
+  "drinkSize|500 ml / 16 oz": "That’s a whole beverage meal.",
+  "drinkSize|700 ml / 24 oz": "That cup is doing cardio for you.",
+  "drinkSize|1000 ml / 34 oz": "A liter?? This is hydration cosplay.",
+
+  "drinkSugar|No sugar":
+    "No sugar? Sure. And I’m a treadmill. I believe you. Mostly.",
+  "drinkSugar|Some sugar": "Some sugar. The ‘it’s fine’ special.",
+  "drinkSugar|Very sweet": "Very sweet. We’re speedrunning joy.",
+
+  "drinkCream|No": "No cream. Suspiciously responsible.",
+  "drinkCream|Yes": "A little creamy. Noted.",
+  "drinkCream|Extra creamy": "Extra creamy. That’s basically dessert.",
+
+  // Scenario-ish ids used by DB seeds
+  "cupSize|350 ml / 12 oz (small-ish)": "Small-ish. Allegedly responsible.",
+  "cupSize|500 ml / 16 oz (standard)": "Standard. Still counts though.",
+  "cupSize|700 ml / 24 oz (the bucket)": "Bucket size. Bold choice.",
+  "cupSize|1000 ml / 34 oz (basically a jug)":
+    "That’s not a cup. That’s a commitment.",
+
+  "sugarLevel|0% (ascetic)": "0% sugar. Ascetic. Also… sure.",
+  "sugarLevel|25% (polite)": "25% sugar: the ‘I’m trying’ performance.",
+  "sugarLevel|50% (normal human)": "50% sugar: balanced chaos.",
+  "sugarLevel|75% (sweet-tooth energy)":
+    "75% sugar: your taste buds are the CEO now.",
+  "sugarLevel|100% (mainlining joy)":
+    "100% sugar: we’re not sipping, we’re speedrunning joy.",
 };
 
 // =====================================================
@@ -338,13 +419,10 @@ export function formatRoast(
   vars: { dish?: string; cal?: number; answer?: string; scenario?: string }
 ): string {
   let result = template;
-  if (vars.dish)
-    result = result.replace(/{dish}/g, vars.dish.toLowerCase());
+  if (vars.dish) result = result.replace(/{dish}/g, vars.dish.toLowerCase());
   if (vars.cal) result = result.replace(/{cal}/g, vars.cal.toString());
-  if (vars.answer)
-    result = result.replace(/{answer}/g, vars.answer);
-  if (vars.scenario)
-    result = result.replace(/{scenario}/g, vars.scenario);
+  if (vars.answer) result = result.replace(/{answer}/g, vars.answer);
+  if (vars.scenario) result = result.replace(/{scenario}/g, vars.scenario);
   return result;
 }
 
