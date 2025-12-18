@@ -120,6 +120,37 @@ export const dishRecognitionRoasts = {
     "Coffee recorded. The foam is suspicious.",
     "Coffee added. Tell me it wasn't 'extra sweet'.",
   ],
+  "bubble tea": [
+    "Bubble tea logged. Tea cosplay with dessert consequences.",
+    "Bubble tea detected. The pearls are about to testify.",
+    "Bubble tea entered. We will be auditing sugar and toppings.",
+    "Bubble tea confirmed. Straw-to-regret ratio pending.",
+    "Bubble tea recorded. Liquid calories in a cute cup.",
+    "Bubble tea logged. Please disclose the boba situation.",
+  ],
+  boba: [
+    "Boba logged. Chewing your drink was a choice.",
+    "Boba detected. The tapioca pearls are basically side quests.",
+    "Boba entered. Sugar level confession time.",
+    "Boba confirmed. This is dessert pretending to hydrate you.",
+    "Boba recorded. The straw is a pipeline of consequences.",
+  ],
+  sushi: [
+    "Sushi logged. Elegant chaos, served cold.",
+    "Sushi detected. The soy sauce will decide your fate.",
+    "Sushi entered. Please disclose the mayo roll crimes.",
+    "Sushi confirmed. Pieces count confession required.",
+    "Sushi recorded. Rice adds up fast. Surprise.",
+    "Sushi logged. We will be auditing the side quests.",
+  ],
+  steak: [
+    "Steak logged. Protein with a butter budget.",
+    "Steak detected. Size matters and you know it.",
+    "Steak entered. Please disclose the sauce/butter situation.",
+    "Steak confirmed. Sides are where things get dangerous.",
+    "Steak recorded. The plate is doing the heavy lifting.",
+    "Steak logged. We respect the commitment, fear the sides.",
+  ],
   ramen: [
     "Ramen logged. Broth-to-regret ratio pending.",
     "Ramen detected. This is going to be salty in multiple ways.",
@@ -356,6 +387,14 @@ export const questionIntroRoasts = {
     "How sweet was it? Don't make me do forensic math.",
     "Declare the syrup situation.",
     "Sugar level confession booth.",
+  ],
+
+  // Bubble Tea
+  cream: [
+    "Milk/cream situation? The stealth multiplier.",
+    "Dairy check. This is where tea becomes dessert.",
+    "Cream level? Be honest. The cup remembers.",
+    "Tell me the milk situation before we do the math.",
   ],
 
   // Generic
@@ -733,6 +772,176 @@ export const optionClickRoasts = {
     "75% sugar: your taste buds are the CEO now.",
   "sugarLevel|100% (mainlining joy)":
     "100% sugar: we're not sipping, we're speedrunning joy.",
+
+  // Bubble Tea (extra option reactions)
+  "cream|No dairy (tea-only mode)": "Tea-only mode. Suspiciously responsible.",
+  "cream|Regular milk": "Regular milk. Classic, comfy, and countable.",
+  "cream|Cream / milk foam / extra creamy":
+    "Extra creamy. Your tea just became a dessert.",
+
+  "toppings|None (suspiciously responsible)":
+    "No toppings. Who are you and what happened?",
+  "toppings|Boba pearls": "Boba pearls. Chewable calories. Noted.",
+  "toppings|Jelly/pudding": "Jelly/pudding. Fancy sugar textures. Respect.",
+  "toppings|Extra boba + extras (chaos mode)":
+    "Chaos mode. Your drink is now a full meal.",
+
+  // Sushi
+  "pieces|6 pieces (light snack)": "6 pieces. Light snack energy. Allegedly.",
+  "pieces|8 pieces (classic)": "8 pieces. Classic. Respectable damage.",
+  "pieces|12 pieces (respectable damage)":
+    "12 pieces. The app respects the honesty.",
+  "pieces|16+ pieces (I fear no salmon)":
+    "16+ pieces. Fearless. Unhinged. Iconic.",
+
+  "style|Mostly sashimi (lean-ish)": "Mostly sashimi. Lean-ish. We see you.",
+  "style|Nigiri (rice included)": "Nigiri. Rice adds up. Still delicious.",
+  "style|Rolls (standard)": "Standard rolls. Safe chaos.",
+  "style|Saucy / mayo / crunchy rolls":
+    "Saucy mayo rolls. You chose flavor over peace.",
+
+  "extras|Just soy + wasabi": "Just soy/wasabi. Minimalism. Rare.",
+  "extras|Miso soup / salad": "Miso/salad. A responsible side quest.",
+  "extras|Edamame / gyoza (side quest)":
+    "Side quest accepted. The calories came with it.",
+  "extras|Tempura / fried things (plot twist)":
+    "Plot twist: fried sides. The app sighed.",
+
+  // Steak
+  "weight|6 oz / ~170 g": "6 oz. Calm. Controlled. Respect.",
+  "weight|8 oz / ~225 g": "8 oz. Standard steak behavior.",
+  "weight|12 oz / ~340 g": "12 oz. Big protein energy.",
+  "weight|16 oz / ~450 g (absolute unit)":
+    "Absolute unit. The plate is filing a complaint.",
+
+  "butter|No extra (rare behavior)": "No extra butter. Rare discipline.",
+  "butter|A little butter/oil": "A little butter. The stealth tax.",
+  "butter|Basted / garlic butter / sauce fiesta":
+    "Garlic butter fiesta. Your steak just got expensive.",
+
+  "sides|None (just vibes and protein)":
+    "No sides. Just protein and power. Okay.",
+  "sides|Veggies / salad": "Veggies/salad. Balance cosplay. Respect.",
+  "sides|Potato / bread": "Potato/bread. Classic side damage.",
+  "sides|Fries + something else (double side quest)":
+    "Double side quest. Your steak brought friends.",
+
+  // Generic (coverage keys used across multiple scenarios)
+  "addons|None": "No add-ons. Minimalist era. Suspicious.",
+  "addons|Protein": "Protein add-on. You're cosplaying as disciplined.",
+  "addons|Nut butter / oats": "Nut butter/oats. Healthy-ish, but dense.",
+  "addons|Both (the gym-influencer combo)":
+    "Both add-ons. Gym-influencer combo unlocked.",
+
+  "bag|Small bag": "Small bag. Cute. Potentially a lie.",
+  "bag|Medium bag": "Medium bag. Standard snack damage.",
+  "bag|Large bag (family size, solo mission)":
+    "Family size, solo mission. The app salutes your bravery.",
+
+  "base|Fruit + water": "Fruit + water base. The responsible timeline.",
+  "base|Milk/yogurt": "Milk/yogurt base. Creamy calories have entered.",
+  "base|Ice cream base / milkshake territory":
+    "Ice cream base. We're in milkshake territory now.",
+
+  "bowlSize|Small bowl": "Small bowl. Restraint cosplay. Respect.",
+  "bowlSize|Normal bowl": "Normal bowl. The calm option. Allegedly.",
+  "bowlSize|Big bowl": "Big bowl. The app is widening the chart.",
+
+  "broth|Light (shoyu/miso-ish)": "Light broth. A rare peaceful choice.",
+  "broth|Rich (tonkotsu vibes)": "Rich broth. The mouthfeel tax begins.",
+  "broth|Extra rich + oil layer (movie sheen)":
+    "Oil layer with a movie sheen. Cinematic calories.",
+
+  "cone|Cup": "Cup. Practical. Still dangerous.",
+  "cone|Waffle cone": "Waffle cone. The cone is also dessert. Noted.",
+  "cone|Stuffed cone / extra": "Stuffed cone. You chose chaos on purpose.",
+
+  "count|1 (innocent)": "One. Innocent behavior. Rare.",
+  "count|2 (double trouble)": "Two. Double trouble. We move.",
+  "count|2 tacos": "Two tacos. A warm-up round.",
+  "count|3 tacos": "Three tacos. The app respects the honesty.",
+  "count|4+ tacos": "4+ tacos. This is an event now.",
+  "count|3+ (donut era)": "3+ donuts. You're in your donut era.",
+
+  "dip|No dip": "No dip. Raw-dogging the snack. Bold.",
+  "dip|Salsa": "Salsa. Acid and spice. Slightly responsible.",
+  "dip|Cheese dip / creamy dip": "Cheese dip. Cream-based temptation.",
+
+  "extras|None": "No extras. Minimalism. Rare.",
+  "extras|No extras": "No extras. You kept it clean. Respect.",
+  "extras|Bread on the side": "Bread on the side. Side quest accepted.",
+  "extras|Egg": "Egg add-on. Protein with a side of calories.",
+  "extras|Extra cheese": "Extra cheese. The app sighed.",
+  "extras|Extra noodles": "Extra noodles. Doubling down on comfort.",
+  "extras|Extra chashu/meat": "Extra meat. Protein flex. Still counts.",
+  "extras|Meatballs / sausage": "Meatballs/sausage. Suddenly it's a feast.",
+  "extras|Just soda": "Just soda. Liquid calories doing stealth work.",
+  "extras|Sweet syrup add-on (rare but chaotic)":
+    "Sweet syrup add-on. Rare, chaotic, and countable.",
+
+  "frosting|Light frosting": "Light frosting. The 'I'm trying' performance.",
+  "frosting|Thick frosting": "Thick frosting. Cement layer. Iconic.",
+  "frosting|Frosting + extras": "Frosting plus extras. You chose violence.",
+
+  "pieces|2 tenders / small portion": "2 tenders. Small portion. Allegedly.",
+  "pieces|4 tenders / medium": "4 tenders. The classic damage.",
+  "pieces|8 wings / big": "8 wings. Big energy. Sticky fingers incoming.",
+  "pieces|Bucket energy": "Bucket energy. This is not a snack anymore.",
+
+  "portion|Small bowl": "Small bowl. Cute. Suspicious.",
+  "portion|Normal bowl": "Normal bowl. The 'it's fine' bracket.",
+  "portion|Huge bowl": "Huge bowl. The app is bracing itself.",
+
+  "sauce|No sauce": "No sauce. Dry era. Who hurt you?",
+  "sauce|A little": "A little sauce. Controlled chaos.",
+  "sauce|Drenched": "Drenched. Sauce is the main character.",
+  "sauce|Tomato-based": "Tomato-based. Classic comfort tax.",
+  "sauce|Cream-based": "Cream-based. The stealth multiplier.",
+  "sauce|Oil/butter-based": "Oil/butter-based. The shine means calories.",
+
+  "scoops|1 scoop": "One scoop. Innocent-ish.",
+  "scoops|2 scoops": "Two scoops. The standard spiral.",
+  "scoops|3 scoops (ambition)": "Three scoops. Ambition. Chaos.",
+  "scoops|Sundae / huge cup": "Sundae mode. You came to win.",
+
+  "seconds|No": "No seconds. Character growth.",
+  "seconds|Yes": "Yes seconds. Round two energy. Noted.",
+
+  "sides|No sides": "No sides. Minimalism. Rare behavior.",
+  "sides|Fries": "Fries. The side that never stays a side.",
+  "sides|Fries + a drink": "Fries + a drink. Combo behavior detected.",
+  "sides|Mac & cheese": "Mac & cheese side. Comfort on comfort.",
+  "sides|Rice/beans": "Rice/beans. The classic support squad.",
+  "sides|Chips + salsa": "Chips + salsa. Crunch with a conscience.",
+  "sides|Chips + queso (dangerously tasty)":
+    "Chips + queso. Dangerously tasty. Loud calories.",
+
+  "size|250 ml / 8 oz": "8 oz. Cute. Still counts.",
+  "size|350 ml / 12 oz": "12 oz. Normal-ish. We move.",
+  "size|500 ml / 16 oz": "16 oz. That's a whole beverage.",
+  "size|700 ml / 24 oz": "24 oz. That cup is doing cardio.",
+  "size|1000 ml / 34 oz": "34 oz. This is a jug in disguise.",
+
+  "slice|Small slice": "Small slice. Cute. Suspicious.",
+  "slice|Normal slice": "Normal slice. The baseline damage.",
+  "slice|Big slice": "Big slice. Main character slice.",
+  "slice|Cheesecake slice (dense mode)": "Cheesecake slice. Dense mode engaged.",
+
+  "toppings|None": "No toppings. Raw choice. Respect.",
+  "toppings|Sprinkles / small toppings": "Sprinkles. Tiny chaos. Mostly vibes.",
+  "toppings|Chocolate sauce / caramel": "Sauce drizzle. Sweet tax applied.",
+  "toppings|Nuts + sauce + whipped cream (the deluxe)":
+    "The deluxe toppings. You built a project.",
+
+  "type|Regular": "Regular. Classic. Still dangerous.",
+  "type|Filled": "Filled. Surprise calories inside.",
+  "type|Plain / glazed": "Plain/glazed. Simple chaos.",
+  "type|Frosted + toppings": "Frosted + toppings. Fully committed.",
+  "type|Cheesy / loaded": "Cheesy/loaded. The app felt that.",
+  "type|Fried shell / extra crunch": "Fried shell. Extra crunch, extra math.",
+  "type|Street style (simple)": "Street style. Simple. Dangerous anyway.",
+  "type|Regular + refill(s)": "Refills happened. The plot thickens.",
+  "type|Zero / diet": "Zero/diet. The app nods politely.",
 };
 
 // =====================================================
