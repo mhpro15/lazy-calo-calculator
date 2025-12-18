@@ -4,17 +4,13 @@ import {
   dishRecognitionRoasts,
 } from "../data/roasts";
 import type { Question } from "../data/questions";
+import { pickFreshLine, type RoastValue } from "./roastPicker";
 
 export type RoastPack = {
   dishRoast: string | null;
-  questionIntroById: Record<string, string>;
-  optionRoastByKey: Record<string, string>;
+  questionIntroById: Record<string, RoastValue>;
+  optionRoastByKey: Record<string, RoastValue>;
 };
-
-function pick(seed: number, items: string[]) {
-  if (items.length === 0) return "";
-  return items[Math.abs(seed) % items.length];
-}
 
 function normalizeDish(dish: string) {
   return dish.trim().toLowerCase();
@@ -22,26 +18,32 @@ function normalizeDish(dish: string) {
 
 function resolveDishRoast(dish: string, seed: number) {
   const d = normalizeDish(dish);
-  const candidates = d.includes("pizza")
-    ? dishRecognitionRoasts.pizza
-    : d.includes("burger")
-    ? dishRecognitionRoasts.burger
-    : d.includes("salad")
-    ? dishRecognitionRoasts.salad
-    : d.includes("coffee")
-    ? dishRecognitionRoasts.coffee
+
+  // Match any defined dishKey (except generic). Longest key wins.
+  const entries = Object.entries(dishRecognitionRoasts).filter(
+    ([k]) => k !== "generic"
+  ) as Array<[string, string[]]>;
+
+  let bestKey: string | null = null;
+  for (const [k] of entries) {
+    if (!k) continue;
+    if (d.includes(k.toLowerCase())) {
+      if (!bestKey || k.length > bestKey.length) bestKey = k;
+    }
+  }
+
+  const candidates = bestKey
+    ? (dishRecognitionRoasts as Record<string, string[]>)[bestKey]
     : dishRecognitionRoasts.generic;
 
-  const line = pick(seed, candidates);
-  return line.replaceAll("{dish}", dish.trim());
-}
+  const line =
+    pickFreshLine({
+      key: `dish:${d || "(blank)"}`,
+      value: candidates,
+      avoidLast: 6,
+    }) ?? candidates[Math.abs(seed) % candidates.length];
 
-function coerceToLines(value: unknown): string[] {
-  if (typeof value === "string") return [value];
-  if (Array.isArray(value) && value.every((v) => typeof v === "string")) {
-    return value as string[];
-  }
-  return [];
+  return line.replaceAll("{dish}", dish.trim());
 }
 
 export function buildRoastPack(args: {
@@ -53,21 +55,22 @@ export function buildRoastPack(args: {
     ? resolveDishRoast(args.dish, args.seed)
     : null;
 
-  const questionIntroById: Record<string, string> = {};
+  const questionIntroById: Record<string, RoastValue> = {};
   for (const q of args.questions) {
-    const lines = coerceToLines(
-      (questionIntroRoasts as Record<string, unknown>)[q.id]
-    );
-    if (lines.length > 0)
-      questionIntroById[q.id] = pick(args.seed + q.id.length, lines);
+    const value = (questionIntroRoasts as Record<string, unknown>)[
+      q.id
+    ] as RoastValue;
+    if (value) questionIntroById[q.id] = value;
   }
 
-  const optionRoastByKey: Record<string, string> = {};
+  const optionRoastByKey: Record<string, RoastValue> = {};
   for (const q of args.questions) {
     for (const opt of q.options) {
       const key = `${q.id}|${opt.label}`;
-      const line = (optionClickRoasts as Record<string, string>)[key];
-      if (line) optionRoastByKey[key] = line;
+      const value = (optionClickRoasts as Record<string, unknown>)[
+        key
+      ] as RoastValue;
+      if (value) optionRoastByKey[key] = value;
     }
   }
 

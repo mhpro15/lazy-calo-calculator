@@ -597,6 +597,181 @@ export const SCENARIO_SEEDS: SeedScenario[] = [
       },
     ],
   },
+  {
+    slug: "burrito",
+    title: "Burrito / Wrap",
+    iconKey: "Utensils",
+    foodType: "MEAL",
+    keywords: ["burrito", "wrap", "chipotle", "tortilla wrap", "burrito bowl"],
+    questions: [
+      {
+        id: "mealPortion",
+        text: "Burrito size — how big was it?",
+        options: [
+          { label: "Small plate", value: 650 },
+          { label: "Normal plate", value: 900 },
+          { label: "Big plate", value: 1250 },
+          { label: "Seconds happened", value: 1600 },
+        ],
+      },
+      {
+        id: "mealExtras",
+        text: "Extras? (cheese, sour cream, guac, sauces)",
+        options: [
+          { label: "None / minimal", value: 0 },
+          { label: "Some sauce/cheese", value: 220 },
+          { label: "Heavy sauce/cheese/oil", value: 420 },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "sandwich",
+    title: "Sandwich / Sub",
+    iconKey: "Utensils",
+    foodType: "MEAL",
+    keywords: [
+      "sandwich",
+      "sub",
+      "hoagie",
+      "panini",
+      "bagel sandwich",
+      "grilled cheese",
+    ],
+    questions: [
+      {
+        id: "mealPortion",
+        text: "Sandwich size?",
+        options: [
+          { label: "Small plate", value: 520 },
+          { label: "Normal plate", value: 780 },
+          { label: "Big plate", value: 1050 },
+          { label: "Seconds happened", value: 1400 },
+        ],
+      },
+      {
+        id: "mealExtras",
+        text: "Extras? (mayo/cheese/oil/sides)",
+        options: [
+          { label: "None / minimal", value: 0 },
+          { label: "Some sauce/cheese", value: 180 },
+          { label: "Heavy sauce/cheese/oil", value: 350 },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "pho",
+    title: "Pho / Noodle Soup",
+    iconKey: "Utensils",
+    foodType: "MEAL",
+    keywords: ["pho", "noodle soup", "viet", "rice noodles"],
+    questions: [
+      {
+        id: "mealPortion",
+        text: "Bowl size?",
+        options: [
+          { label: "Small plate", value: 520 },
+          { label: "Normal plate", value: 720 },
+          { label: "Big plate", value: 950 },
+          { label: "Seconds happened", value: 1250 },
+        ],
+      },
+      {
+        id: "mealExtras",
+        text: "Extras? (extra noodles, meat, fried add-ons)",
+        options: [
+          { label: "None / minimal", value: 0 },
+          { label: "Some sauce/cheese", value: 200 },
+          { label: "Heavy sauce/cheese/oil", value: 420 },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "curry",
+    title: "Curry + Rice",
+    iconKey: "Utensils",
+    foodType: "MEAL",
+    keywords: ["curry", "korma", "tikka", "thai curry", "curry rice"],
+    questions: [
+      {
+        id: "mealPortion",
+        text: "Portion size?",
+        options: [
+          { label: "Small plate", value: 650 },
+          { label: "Normal plate", value: 900 },
+          { label: "Big plate", value: 1200 },
+          { label: "Seconds happened", value: 1550 },
+        ],
+      },
+      {
+        id: "mealExtras",
+        text: "Extras? (cream, ghee/oil, naan)",
+        options: [
+          { label: "None / minimal", value: 0 },
+          { label: "Some sauce/cheese", value: 220 },
+          { label: "Heavy sauce/cheese/oil", value: 480 },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "pancakes",
+    title: "Pancakes / Waffles",
+    iconKey: "Utensils",
+    foodType: "MEAL",
+    keywords: ["pancakes", "waffles", "french toast"],
+    questions: [
+      {
+        id: "mealPortion",
+        text: "How much breakfast happened?",
+        options: [
+          { label: "Small plate", value: 520 },
+          { label: "Normal plate", value: 820 },
+          { label: "Big plate", value: 1150 },
+          { label: "Seconds happened", value: 1500 },
+        ],
+      },
+      {
+        id: "mealExtras",
+        text: "Toppings? (syrup, butter, whipped cream)",
+        options: [
+          { label: "None / minimal", value: 0 },
+          { label: "Some sauce/cheese", value: 260 },
+          { label: "Heavy sauce/cheese/oil", value: 520 },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "friedRice",
+    title: "Fried Rice / Rice Bowl",
+    iconKey: "Utensils",
+    foodType: "MEAL",
+    keywords: ["fried rice", "rice bowl", "teriyaki", "bibimbap"],
+    questions: [
+      {
+        id: "mealPortion",
+        text: "Bowl size?",
+        options: [
+          { label: "Small plate", value: 620 },
+          { label: "Normal plate", value: 920 },
+          { label: "Big plate", value: 1250 },
+          { label: "Seconds happened", value: 1650 },
+        ],
+      },
+      {
+        id: "mealExtras",
+        text: "Extras? (extra oil, sauces, fried add-ons)",
+        options: [
+          { label: "None / minimal", value: 0 },
+          { label: "Some sauce/cheese", value: 200 },
+          { label: "Heavy sauce/cheese/oil", value: 480 },
+        ],
+      },
+    ],
+  },
 ];
 
 export function listScenarioSlugs() {

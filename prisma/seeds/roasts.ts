@@ -16,6 +16,10 @@ const foodTypeForQuestionKey = (
     questionKey === "dressing" ||
     questionKey === "toppings" ||
     questionKey === "pieces" ||
+    questionKey === "bowlSize" ||
+    questionKey === "broth" ||
+    questionKey === "sauce" ||
+    questionKey === "portion" ||
     questionKey === "weight" ||
     questionKey === "style" ||
     questionKey === "extras" ||
@@ -28,10 +32,12 @@ const foodTypeForQuestionKey = (
     questionKey.startsWith("snack") ||
     questionKey === "bag" ||
     questionKey === "count" ||
+    questionKey === "scoops" ||
     questionKey === "cone" ||
     questionKey === "slice" ||
     questionKey === "frosting" ||
-    questionKey === "seconds"
+    questionKey === "seconds" ||
+    questionKey === "dip"
   ) {
     return "SNACK";
   }
@@ -68,13 +74,16 @@ export function buildRoastSeeds(): SeedRoastLine[] {
   }
 
   for (const [questionKey, line] of Object.entries(questionIntroRoasts)) {
-    rows.push({
-      scope: "QUESTION",
-      foodType: foodTypeForQuestionKey(questionKey),
-      questionKey,
-      text: line,
-      order: 0,
-    });
+    const lines = Array.isArray(line) ? line : [line];
+    for (let i = 0; i < lines.length; i += 1) {
+      rows.push({
+        scope: "QUESTION",
+        foodType: foodTypeForQuestionKey(questionKey),
+        questionKey,
+        text: lines[i],
+        order: i,
+      });
+    }
   }
 
   for (const [key, text] of Object.entries(optionClickRoasts)) {
@@ -83,14 +92,17 @@ export function buildRoastSeeds(): SeedRoastLine[] {
     const questionKey = key.slice(0, pipeIndex);
     const optionLabel = key.slice(pipeIndex + 1);
 
-    rows.push({
-      scope: "OPTION",
-      foodType: foodTypeForQuestionKey(questionKey),
-      questionKey,
-      optionLabel,
-      text,
-      order: 0,
-    });
+    const lines = Array.isArray(text) ? text : [text];
+    for (let i = 0; i < lines.length; i += 1) {
+      rows.push({
+        scope: "OPTION",
+        foodType: foodTypeForQuestionKey(questionKey),
+        questionKey,
+        optionLabel,
+        text: lines[i],
+        order: i,
+      });
+    }
   }
 
   return rows;

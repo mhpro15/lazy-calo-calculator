@@ -19,16 +19,16 @@ type ScenarioResponse =
       };
       roasts: {
         dishRoast: string | null;
-        questionIntroById: Record<string, string>;
-        optionRoastByKey: Record<string, string>;
+        questionIntroById: Record<string, string[]>;
+        optionRoastByKey: Record<string, string[]>;
       };
     }
   | {
       matched: false;
       roasts: {
         dishRoast: string | null;
-        questionIntroById: Record<string, string>;
-        optionRoastByKey: Record<string, string>;
+        questionIntroById: Record<string, string[]>;
+        optionRoastByKey: Record<string, string[]>;
       };
     };
 
@@ -39,6 +39,11 @@ function normalize(s: string) {
 function pick(seed: number, items: Array<{ text: string }>) {
   if (items.length === 0) return null;
   return items[Math.abs(seed) % items.length].text;
+}
+
+function pickRandom(items: Array<{ text: string }>) {
+  if (items.length === 0) return null;
+  return items[Math.floor(Math.random() * items.length)].text;
 }
 
 async function getDishRoast(dish: string) {
@@ -56,7 +61,8 @@ async function getDishRoast(dish: string) {
 
   const chosenPool =
     specific.length > 0 ? specific : rows.filter((r) => !r.dishKey);
-  const line = pick(seed, chosenPool);
+  // Randomized per request so users don't see the same opener forever.
+  const line = pickRandom(chosenPool) ?? pick(seed, chosenPool);
   return line ? line.replaceAll("{dish}", dish.trim()) : null;
 }
 
@@ -65,8 +71,6 @@ async function getRoastPack(args: {
   foodType: "MEAL" | "SNACK" | "DRINK";
   questionKeys: string[];
 }) {
-  const seed = args.dish.length;
-
   const rows = await prisma.roastLine.findMany({
     where: {
       scope: { in: ["QUESTION", "OPTION"] },
@@ -83,15 +87,15 @@ async function getRoastPack(args: {
     orderBy: { order: "asc" },
   });
 
-  const questionIntroById: Record<string, string> = {};
-  const optionRoastByKey: Record<string, string> = {};
+  const questionIntroById: Record<string, string[]> = {};
+  const optionRoastByKey: Record<string, string[]> = {};
 
   for (const q of args.questionKeys) {
     const qRows = rows.filter(
       (r) => r.scope === "QUESTION" && r.questionKey === q
     );
-    const chosen = pick(seed + q.length, qRows);
-    if (chosen) questionIntroById[q] = chosen;
+    const lines = qRows.map((r) => r.text).filter(Boolean);
+    if (lines.length > 0) questionIntroById[q] = lines;
   }
 
   const optionRows = rows.filter(
@@ -99,8 +103,8 @@ async function getRoastPack(args: {
   );
   for (const r of optionRows) {
     const key = `${r.questionKey}|${r.optionLabel}`;
-    // First one wins (order controls priority)
-    if (!optionRoastByKey[key]) optionRoastByKey[key] = r.text;
+    optionRoastByKey[key] ??= [];
+    optionRoastByKey[key].push(r.text);
   }
 
   return {

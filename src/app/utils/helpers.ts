@@ -1,9 +1,49 @@
+import { pickFreshLine } from "./roastPicker";
+
 export const getFunnyComment = (cal: number): string => {
-  if (cal < 300) return "Is that all? Are you a hummingbird?";
-  if (cal < 700) return "A solid effort. Your metabolism is mildly annoyed.";
-  if (cal < 1500)
-    return "Wow. That's... impressive. Maybe take the stairs today?";
-  return "You've achieved legendary status. Your couch is calling your name.";
+  const band = cal < 300 ? "A" : cal < 700 ? "B" : cal < 1500 ? "C" : "D";
+  const linesByBand: Record<typeof band, string[]> = {
+    A: [
+      "Is that all? Are you a hummingbird?",
+      "Sub-300. Suspiciously responsible.",
+      "Okay, light work. The app is confused.",
+      "This is what restraint looks like. Rare.",
+      "The calories barely registered. Impressive.",
+      "Clean. Efficient. Mildly unsettling.",
+    ],
+    B: [
+      "A solid effort. Your metabolism is mildly annoyed.",
+      "Respectable chaos. Nothing to panic about.",
+      "Normal meal energy. The app nods.",
+      "Okay, that’s reasonable-ish.",
+      "Mid-range. The safest kind of honesty.",
+      "Not bad. You’re still in the ‘it’s fine’ zone.",
+    ],
+    C: [
+      "Wow. That's... impressive. Maybe take the stairs today?",
+      "We’ve entered the ‘this counts as a workout’ bracket.",
+      "Okay bestie. That’s a lot.",
+      "This meal has plot. And chapters.",
+      "Your couch is about to learn your name.",
+      "That was… committed.",
+    ],
+    D: [
+      "You've achieved legendary status. Your couch is calling your name.",
+      "Legendary. The app is clapping slowly.",
+      "This is a meal that makes history.",
+      "Okay. That's basically a day.",
+      "Your metabolism just filed a ticket.",
+      "Epic. Unhinged. Iconic.",
+    ],
+  };
+
+  const picked = pickFreshLine({
+    key: `result:comment:${band}`,
+    value: linesByBand[band],
+    avoidLast: 6,
+  });
+
+  return picked ?? linesByBand[band][0];
 };
 
 export const LAZY_TIPS = [
@@ -11,6 +51,10 @@ export const LAZY_TIPS = [
   "Tip: Drinking water while eating cancels out the grease. It's science.",
   "Tip: If no one saw you eat it, did it even happen?",
   "Tip: Licking the plate is technically cardio.",
+  "Tip: If you split it into two sittings, it becomes 'meal prep'.",
+  "Tip: Reading the nutrition label counts as self-improvement.",
+  "Tip: The first bite is free. (This is not legal advice.)",
+  "Tip: If you call it a 'treat', the calories get shy.",
 ];
 
 export type Deliciousness = "delicious" | "ok" | "not_really";
@@ -37,7 +81,6 @@ export const getTasteTax = (
 ): TasteTax => {
   const band: "A" | "B" | "C" | "D" =
     calories < 300 ? "A" : calories < 700 ? "B" : calories < 1500 ? "C" : "D";
-  const pick = <T>(arr: T[]) => arr[Math.abs(seed) % arr.length];
 
   if (!deliciousness) {
     return {
@@ -72,20 +115,22 @@ export const getTasteTax = (
     D: ["Taste Tax: legendary mode", "Balance Meter: tomorrow-you is watching"],
   };
 
-  const ratingIndex =
-    deliciousness === "delicious"
-      ? seed + 1
-      : deliciousness === "ok"
-      ? seed + 2
-      : seed + 3;
+  const titleLines = titlesByBand[band];
+  const suggestionLines = suggestionsByRating[deliciousness];
 
-  return {
-    title: pick(titlesByBand[band]),
-    suggestion: pick(
-      suggestionsByRating[deliciousness]
-        .map((s, i) => ({ s, i }))
-        .sort((a, b) => ((a.i + ratingIndex) % 3) - ((b.i + ratingIndex) % 3))
-        .map((x) => x.s)
-    ),
-  };
+  const title =
+    pickFreshLine({
+      key: `tasteTax:title:${band}`,
+      value: titleLines,
+      avoidLast: 4,
+    }) ?? titleLines[Math.abs(seed) % titleLines.length];
+
+  const suggestion =
+    pickFreshLine({
+      key: `tasteTax:suggestion:${deliciousness}:${band}`,
+      value: suggestionLines,
+      avoidLast: 6,
+    }) ?? suggestionLines[Math.abs(seed + calories) % suggestionLines.length];
+
+  return { title, suggestion };
 };

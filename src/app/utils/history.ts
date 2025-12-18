@@ -67,6 +67,16 @@ export function saveHistory(entries: HistoryEntry[]) {
   }
 }
 
+export function clearHistory() {
+  if (typeof window === "undefined") return;
+
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // ignore errors during purge
+  }
+}
+
 export function appendHistoryEntry(
   entry: Omit<HistoryEntry, "id">
 ): HistoryEntry {
@@ -87,6 +97,13 @@ export function getLocalDateKey(timestamp: number) {
 
 export function getTodayKey() {
   return getLocalDateKey(Date.now());
+}
+
+export function getTimeSinceLastLog(): number | null {
+  const history = loadHistory();
+  if (history.length === 0) return null;
+  const lastEntry = history[0];
+  return Date.now() - lastEntry.timestamp;
 }
 
 export function getDailySuggestion(totalCalories: number): {
