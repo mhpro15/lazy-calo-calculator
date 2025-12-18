@@ -56,7 +56,10 @@ async function getDishRoast(dish: string) {
 
   const dishLower = normalize(dish);
   const specific = rows
-    .filter((r) => r.dishKey && dishLower.includes(normalize(r.dishKey)))
+    .filter(
+      (r: (typeof rows)[0]) =>
+        r.dishKey && dishLower.includes(normalize(r.dishKey))
+    )
     .sort((a, b) => (b.dishKey?.length ?? 0) - (a.dishKey?.length ?? 0));
 
   const chosenPool =
